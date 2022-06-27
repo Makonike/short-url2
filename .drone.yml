@@ -1,0 +1,14 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: greeting
+    image: alpine
+    commands:
+    - echo hello
+
+  - name: fr
+    image: alpine
+    commands:
+    - echo world
