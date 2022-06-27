@@ -1,20 +1,23 @@
 package main
 
 import (
-	"context"
-
-	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/cloudwego/hertz/pkg/common/utils"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/cloudwego/hertz/pkg/common/hlog"
+	"short-url/controller"
+	"short-url/object"
 )
 
 func main() {
 	h := server.Default()
-
-	h.GET("/ping", func(c context.Context, ctx *app.RequestContext) {
-		ctx.JSON(consts.StatusOK, utils.H{"ping": "pong"})
-	})
-
+	controller.ShortUrl(h)
 	h.Spin()
+}
+
+func init() {
+	hl := hlog.DefaultLogger()
+	err := object.SetupSetting()
+	object.InitAdapter()
+	if err != nil {
+		hl.Error("Init Server Error")
+	}
 }
