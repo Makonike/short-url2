@@ -14,6 +14,7 @@ func GetTicket() (id int64) {
 	var err error
 	hl := hlog.DefaultLogger()
 	// replace into 刷新主键自增
+	// 此处需ticket表中添加唯一索引
 	_, err = adapter.Engine.Exec("REPLACE INTO `ticket` (stub) VALUES (?);", 'a')
 	if err != nil {
 		hl.Error("replace into sql error")
